@@ -3,7 +3,7 @@ add_executable(DataExporter)
 target_include_directories(DataExporter PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/.
     ${Ice_INCLUDE_DIRS}
-    ${Boost_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/asio/asio/include
     ${DEX_GET_DIR}/include
     ${DEX_GET_DIR}
 )

@@ -7,7 +7,7 @@
 #include <memory>
 #include <thread>
 
-#include <boost/asio.hpp>
+#include "asio.hpp"
 
 namespace DataExporter
 {
@@ -32,8 +32,8 @@ namespace DataExporter
         void WriteHeader();
         void WriteBody();
 
-        boost::asio::ip::tcp::socket m_socket;
-        boost::asio::io_context &m_ioContextHandle;
+        asio::ip::tcp::socket m_socket;
+        asio::io_context &m_ioContextHandle;
 
         ThreadSafeQueue<ServerMessage> m_queue;
     };
@@ -58,8 +58,8 @@ namespace DataExporter
 
         uint16_t m_acceptorPort;
 
-        boost::asio::io_context m_context;
-        boost::asio::ip::tcp::acceptor m_acceptor;
+        asio::io_context m_context;
+        asio::ip::tcp::acceptor m_acceptor;
 
         std::vector<TCPServerConnection::Ref> m_clients;
 
