@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace Charon
+namespace DataExporter
 {
 
     TCPServerConnection::TCPServerConnection(asio::io_context &context, asio::ip::tcp::socket socket) : m_ioContextHandle(context), m_socket(std::move(socket))
@@ -26,7 +26,7 @@ namespace Charon
         that the loop of write calls and job submissions had stopped (or was not yet started), so we need to restart/start the
         cycle of writing data to the socket. Otherwise, we just push the data onto the queue.
     */
-    void TCPServerConnection::Send(const StygianMessage &message)
+    void TCPServerConnection::Send(const ServerMessage &message)
     {
         asio::post(m_ioContextHandle,
                    [this, message]()
@@ -123,7 +123,7 @@ namespace Charon
 
     // We attempt to send a message to all clients. If we find a client who has disconnected for whatever reason,
     // we remove it from the client list and free up those resources
-    void TCPServer::MessageClients(const StygianMessage &message)
+    void TCPServer::MessageClients(const ServerMessage &message)
     {
         bool isAnyClientInvalid = false;
 
