@@ -1,8 +1,9 @@
-/** @file:  NSCLDAQDataprocessor.h
- *  @brief: Process frames and stick them into ring buffers.
- */
 #ifndef EXPORT_PROCESSOR_H
 #define EXPORT_PROCESSOR_H
+
+// This has to be included first, as it defines all of the awful macros
+
+#include "BadMacros.h"
 
 #include <get/daq/FrameStorage.h>
 #include "server/TCPServer.h"

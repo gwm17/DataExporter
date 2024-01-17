@@ -9,6 +9,7 @@ target_include_directories(DataExporter PRIVATE
 )
 
 target_sources(DataExporter PRIVATE
+    BadMacros.h
     DataRouter.h
     DataRouter.cpp
     Exporter.h
@@ -31,5 +32,7 @@ target_link_libraries(DataExporter PRIVATE
     mdaq-daq
     MultiFrame
     mdaq-utl
-	Utilities	
+    Utilities
 )
+
+set_target_properties(DataExporter PROPERTIES RUNTIME_OUTPUT_DIRECTORY DEX_BINARY_DIR)

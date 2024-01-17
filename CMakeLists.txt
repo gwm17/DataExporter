@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.12)
 set(CXX_STANDARD_REQUIRED 11)
 
+# Old MacOS sometimes seems to not get CXX_FLAGS set correctly
+# on use of CXX_STANDARD_REQUIRED
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_BUILD_TYPE "Debug")
     message("Building Debug...")

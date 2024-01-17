@@ -40,6 +40,10 @@
 #ifndef get_daq_DataRouter_h_INCLUDED
 #define get_daq_DataRouter_h_INCLUDED
 
+// This has to be included first as it defines all of the awful macros
+
+#include "BadMacros.h"
+
 #include "mdaq/daq/RunProcessor.h"
 #include "utl/net/SocketAddress.h"
 #include "mdaq/daq/DataReceiver.h"
@@ -48,41 +52,42 @@
 // Forward declarations
 namespace mdaq
 {
-namespace daq
-{
-class DataProcessorCore;
-} // daq
+    namespace daq
+    {
+        class DataProcessorCore;
+    } // daq
 } // mdaq
 //_________________________________________________________________________________________________
 namespace get
 {
-namespace daq
-{
-//_________________________________________________________________________________________________
-class DataRouter : public virtual mdaq::daq::RunProcessor
-{
-public:
-	DataRouter(const ::utl::net::SocketAddress& flowEndpoint, const std::string& flowType, const std::string& dataProcessorType);
-	DataRouter(const ::utl::net::SocketAddress& flowEndpoint, const std::string& flowType, std::auto_ptr < ::mdaq::daq::DataProcessorCore > dataProcessor);
-	virtual ~DataRouter();
-    void runConfig(const std::string& configString, const ::Ice::Current& = ::Ice::Current());
-    void runStart(const ::Ice::Current& = ::Ice::Current());
-    void runStop(const ::Ice::Current& = ::Ice::Current());
-    /*
-     Allows the parent to get and manipulate the data processor by
-     getting the data processor core.
-    */
-    mdaq::daq::DataReceiver* getDataReceiver() { return dataReceiver.get(); }
-private:
-	DataRouter(DataRouter const & r);
-	DataRouter& operator=(const DataRouter & r);
-	void createDataReceiver(const ::utl::net::SocketAddress& flowEndpoint, const std::string& flowType);
+    namespace daq
+    {
+        //_________________________________________________________________________________________________
+        class DataRouter : public virtual mdaq::daq::RunProcessor
+        {
+        public:
+            DataRouter(const ::utl::net::SocketAddress &flowEndpoint, const std::string &flowType, const std::string &dataProcessorType);
+            DataRouter(const ::utl::net::SocketAddress &flowEndpoint, const std::string &flowType, std::auto_ptr<::mdaq::daq::DataProcessorCore> dataProcessor);
+            virtual ~DataRouter();
+            void runConfig(const std::string &configString, const ::Ice::Current & = ::Ice::Current());
+            void runStart(const ::Ice::Current & = ::Ice::Current());
+            void runStop(const ::Ice::Current & = ::Ice::Current());
+            /*
+             Allows the parent to get and manipulate the data processor by
+             getting the data processor core.
+            */
+            mdaq::daq::DataReceiver *getDataReceiver() { return dataReceiver.get(); }
 
-protected:
-	std::auto_ptr < mdaq::daq::DataReceiver > dataReceiver;
-};
-//_________________________________________________________________________________________________
-} // namespace daq
+        private:
+            DataRouter(DataRouter const &r);
+            DataRouter &operator=(const DataRouter &r);
+            void createDataReceiver(const ::utl::net::SocketAddress &flowEndpoint, const std::string &flowType);
+
+        protected:
+            std::auto_ptr<mdaq::daq::DataReceiver> dataReceiver;
+        };
+        //_________________________________________________________________________________________________
+    } // namespace daq
 } // namespace get
 
 #endif /* get_daq_DataRouter_h_INCLUDED */

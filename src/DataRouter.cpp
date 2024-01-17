@@ -32,13 +32,6 @@
  * =====================================================================================================================
  */
 
-/**
- * Contribution/modification begun at NSCL/FRIB september 19, 2018
- * Modifications are intended to support
- *  -  building external to GET source tree.
- *  -  NSCLDAQ ringbuffer outputter.
- */
-
 #include "DataRouter.h"
 #include "mdaq/daq/IceDataReceiver.h"
 #include "mdaq/daq/TcpDataReceiver.h"
