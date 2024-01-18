@@ -6,8 +6,8 @@
 #define BAD_MACROS_H
 
 // These are especially dumb as they quite literally serve no purpose
-#define ICEUTIL_HEADER(x) = "<IceUtil/" x ">"
-#define ICE_HEADER(x) = "<Ice/" x ">"
+#define ICEUTIL_HEADER(header) = "<IceUtil/header>"
+#define ICE_HEADER(header) = "<Ice/header>"
 
 // No idea what this could possibly be for; some kind of lexical pasting?
 #define ICE_EDITION = Ice
