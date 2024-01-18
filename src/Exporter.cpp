@@ -32,10 +32,13 @@ void Exporter::processFrame(mfm::Frame &frame)
     const mfm::Byte *pData = frame.data();
 
     // Convert frame to raw buffer
-    std::vector<uint8_t> buffer(static_cast<uint8_t *>(pData), nbytes);
+    std::vector<uint8_t> buffer;
+    buffer.insert(buffer.end(), &((uint8_t *)pData)[0], &((uint8_t *)pData)[nbytes - 1])
+        std::vector<uint8_t>
+            buffer(static_cast<uint8_t *>(pData), nbytes);
     DataExporter::ServerMessage message(buffer);
 
-    m_sever.MessageClients(message);
+    m_server.MessageClients(message);
 }
 
 /*-----------------------------------------------------------------------------

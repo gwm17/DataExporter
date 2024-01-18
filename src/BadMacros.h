@@ -5,11 +5,15 @@
 #ifndef BAD_MACROS_H
 #define BAD_MACROS_H
 
-// These are especially dumb as they quite literally serve no purpose
-#define ICEUTIL_HEADER(header) = "<IceUtil/header>"
-#define ICE_HEADER(header) = "<Ice/header>"
-
 // No idea what this could possibly be for; some kind of lexical pasting?
-#define ICE_EDITION = Ice
+// GWM: Yes it is for lexical pasting. So that ICE_HEADER(ICE_EDITION.h)
+// becomes "Ice/Ice.h".
+#define ICE_EDITION Ice
+
+#define QUOTE_IT(x) #x
+
+// Makes ICE_HEADER(header) into "Ice/header"
+#define ICEUTIL_HEADER(header) QUOTE_IT(IceUtil / header)
+#define ICE_HEADER(header) QUOTE_IT(Ice / header)
 
 #endif
