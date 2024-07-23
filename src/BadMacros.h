@@ -13,7 +13,7 @@
 #define QUOTE_IT(x) #x
 
 // Makes ICE_HEADER(header) into "Ice/header"
-#define ICEUTIL_HEADER(header) QUOTE_IT(IceUtil / header)
-#define ICE_HEADER(header) QUOTE_IT(Ice / header)
+#define ICEUTIL_HEADER(header) QUOTE_IT(IceUtil/header)
+#define ICE_HEADER(header) QUOTE_IT(Ice/header)
 
 #endif
