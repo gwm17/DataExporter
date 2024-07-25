@@ -9,7 +9,7 @@
 #include <mfm/Header.h>
 #include <mfm/Common.h>
 
-Exporter::Exporter(uint16_t serverPort) : FrameStorage()
+Exporter::Exporter(uint16_t serverPort) : FrameStorage(), m_server(serverPort)
 {
 }
 
