@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     ::utl::BackendLogger::setBackend(::utl::LoggingBackendPtr(new ::mdaq::utl::ConsoleLoggingBackend));
 
     std::ostringstream usage;
-    usage << "Usage: " << argv[0] << " <[ctrl-ipAddr]:[port]>  <[data-ipAddr]:[port]> [ICE|TCP|FDT] [ByteCounter|ByteStorage|FrameCounter|FrameStorage|Exporter] [Ice arguments]";
+    usage << "Usage: " << argv[0] << " <[ctrl-ipAddr]:[port]>  <[data-ipAddr]:[port]>";
     try
     {
         CmdLineArgs args = CmdLineArgs::build(argc, argv);
@@ -85,17 +85,11 @@ int main(int argc, char *argv[])
             flowEndpoint.ipAddress().in_addr() = ctrlEndpoint.ipAddress().in_addr();
 
         // Setting data flow type
-        std::string flowType = args.size() > 3 ? args[3] : "TCP";
+        std::string flowType = "TCP";
         ba::to_upper(flowType);
 
         // Setting data processor type
-        const std::string processorType = args.size() > 4 ? args[4] : "FrameStorage";
-
-        // Load frame formats
-        if ("FrameStorage" == processorType)
-        {
-            mfm::FrameDictionary::instance().addFormats("CoboFormats.xcfg");
-        }
+        const std::string processorType = "Exporter";
 
         // Disable IPv6 support
         // With Ice 3.5, support for IPv6 is enabled by default.
@@ -106,7 +100,7 @@ int main(int argc, char *argv[])
         Server &server = Server::create(ctrlEndpoint, args);
         server.ic(); // Hack to ensure ICE communicator is initialized with desired arguments
         IceUtil::Handle<DataRouter> dataRouter(new DataRouter(flowEndpoint, flowType, processorType));
-        server.addServant("DataRouter", dataRouter).start();
+        server.addServant("DataExporter", dataRouter).start();
         dataRouter->runStart();
         server.waitForStop();
         return EXIT_SUCCESS;
