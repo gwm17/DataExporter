@@ -3,14 +3,13 @@
  */
 
 #include "Exporter.h"
-#include "ServerMessage.h"
+#include "server/ServerMessage.h"
 #include <mfm/Frame.h>
 #include <mfm/Field.h>
 #include <mfm/Header.h>
 #include <mfm/Common.h>
 
-Exporter::Exporter(uint16_t serverPort) : m_sourceId(0), m_useTimestamp(false), m_server(serverPort)
-                                                                                    FrameStorage()
+Exporter::Exporter(uint16_t serverPort) : FrameStorage()
 {
 }
 
@@ -33,9 +32,7 @@ void Exporter::processFrame(mfm::Frame &frame)
 
     // Convert frame to raw buffer
     std::vector<uint8_t> buffer;
-    buffer.insert(buffer.end(), &((uint8_t *)pData)[0], &((uint8_t *)pData)[nbytes - 1])
-        std::vector<uint8_t>
-            buffer(static_cast<uint8_t *>(pData), nbytes);
+    buffer.insert(buffer.end(), &((uint8_t *)pData)[0], &((uint8_t *)pData)[nbytes - 1]);
     DataExporter::ServerMessage message(buffer);
 
     m_server.MessageClients(message);
