@@ -19,65 +19,6 @@ Exporter::~Exporter()
 
 void Exporter::processFrame(mfm::Frame &frame)
 {
-    // Get file
-    uint32_t coboIdx, asadIdx, eventIdx;
-    SourceUID sourceUID;
-
-    // Sanity checks on the frame status...
-    try
-    {
-        coboIdx = frame.headerField("coboIdx").value<uint8_t>();
-        asadIdx = frame.headerField("asadIdx").value<uint8_t>();
-        sourceUID = std::make_pair<>(coboIdx, asadIdx);
-        eventIdx = frame.headerField("eventIdx").value<uint32_t>();
-        LOG_DEBUG() << "Storing AsAd no. " << asadIdx << " frame for event " << std::dec << eventIdx << " (" << frame.header().frameSize_B() << " B)";
-    }
-    catch (const mfm::Exception &)
-    {
-        // Check if frame is of MuTanT type 0
-        if (frame.header().frameType() == 0x8)
-        {
-            sourceUID = std::make_pair<>(100, 0);
-            eventIdx = frame.headerField(14u, 4u).value<uint32_t>();
-            LOG_DEBUG() << "Storing MuTanT frame for event " << std::dec << eventIdx << " (" << frame.header().frameSize_B() << " B)";
-        }
-        else
-        {
-            LOG_WARN() << "Dumping frame of type " << std::hex << std::showbase << frame.header().frameType() << std::dec;
-            return;
-        }
-    }
-
-    // Store frame in file
-    std::ofstream &file = getFile(sourceUID, eventIdx);
-    frame.write(file);
-
-    // Deal with write errors (no space left on device)
-    if (not file.good())
-    {
-        LOG_ERROR() << "Error writing frame to file!";
-        closeFile(sourceUID);
-    }
-    else
-    {
-        // Close file after recording its size
-        const size_t fileSize_B = file.tellp();
-        closeFile(sourceUID);
-
-        // Create new file if maximum file size has been reached
-        if (fileSize_B > maxFileSize_MiB * 0x100000)
-        {
-            createNewFile("", sourceUID, false);
-        }
-    }
-
-    // If the server died, for now ignore the frame
-
-    if (!m_server.IsActive())
-    {
-        return;
-    }
-
     // Get the frame size, and pointer to start
     size_t nbytes = sizeFrame(frame);
     const mfm::Byte *pData = frame.data();
@@ -87,6 +28,15 @@ void Exporter::processFrame(mfm::Frame &frame)
     buffer.insert(buffer.end(), &((uint8_t *)pData)[0], &((uint8_t *)pData)[nbytes - 1]);
     DataExporter::ServerMessage message(buffer);
 
+    // Write the frame to disk
+    FrameStorage::processFrame(frame);
+
+    // If the server died, for now ignore the frame
+    if (!m_server.IsActive())
+    {
+        return;
+    }
+    // Send the frame over the server
     m_server.MessageClients(message);
 }
 
