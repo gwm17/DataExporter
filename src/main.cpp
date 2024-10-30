@@ -90,6 +90,9 @@ int main(int argc, char *argv[])
 
         // Setting data processor type
         const std::string processorType = "Exporter";
+        mfm::FrameDictionary::instance().addFormats("CoboFormats.xcfg"); // We'll also need to assemble/decode frames.
+        // GWM The line below is from the NSCLDAQ code, but I have no idea where COBO_FORMAT_FILE comes from
+        // mfm::FrameDictionary::instance().addFormats(COBO_FORMAT_FILE); // We'll also need to assemble/decode frames.
 
         // Disable IPv6 support
         // With Ice 3.5, support for IPv6 is enabled by default.
