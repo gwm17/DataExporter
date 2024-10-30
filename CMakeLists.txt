@@ -15,8 +15,7 @@ endif()
 project(DataExporter)
 
 set(DEX_BINARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bin)
-set(DEX_GET_DIR "/Users/attpc/Documents/GET-software-DB/") # Don't @me for this.
-set(DEX_GET_SOURCE_DIR "/Users/attpc/Documents/GET-20181129-DB/")
+set(DEX_GET_DIR "/Users/attpc/Documents/GET-software/") # Don't @me for this.
 find_package(Ice COMPONENTS Ice)
 find_package(Boost REQUIRED)
 

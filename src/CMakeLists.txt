@@ -6,7 +6,6 @@ target_include_directories(DataExporter PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/asio/asio/include
     ${DEX_GET_DIR}/include
     ${DEX_GET_DIR}
-    ${DEX_GET_SOURCE_DIR}
 )
 
 target_sources(DataExporter PRIVATE
