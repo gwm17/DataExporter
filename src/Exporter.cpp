@@ -11,6 +11,7 @@
 
 Exporter::Exporter(uint16_t serverPort) : FrameStorage(), m_server(serverPort)
 {
+    m_server.StartServer();
 }
 
 Exporter::~Exporter()
