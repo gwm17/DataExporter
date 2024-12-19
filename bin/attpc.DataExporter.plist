@@ -13,7 +13,7 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/attpc/Documents/GetScripts/mmStartDataExporter</string>
+        <string>/Users/attpc/Documents/GetScripts/mmStartDataExporter.sh</string>
     </array>
 
     <key>WorkingDirectory</key>
