@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>attpc.DataExporter</string>
+    
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>DYLD_FALLBACK_LIBRARY_PATH</key>
+        <string>/usr/local/lib</string>
+    </dict>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/attpc/Documents/GetScripts/mmStartDataExporter</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/attpc/Data/mm0</string>
+
+    <key>StandardOutputPath</key>
+    <string>/Users/attpc/Library/Logs/DataExporter.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/attpc/Library/Logs/DataExporter.log</string>
+</dict>
+</plist>
