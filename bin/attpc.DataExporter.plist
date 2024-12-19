@@ -19,7 +19,7 @@
     <key>WorkingDirectory</key>
     <string>/Users/attpc/Data/mm0</string>
 
-    <key>StandardOutputPath</key>
+    <key>StandardOutPath</key>
     <string>/Users/attpc/Library/Logs/DataExporter.log</string>
 
     <key>StandardErrorPath</key>
