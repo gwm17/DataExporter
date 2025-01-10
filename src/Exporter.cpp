@@ -3,38 +3,35 @@
  */
 
 #include "Exporter.h"
-#include "server/ServerMessage.h"
-#include <mfm/Frame.h>
-#include <mfm/Field.h>
-#include <mfm/Header.h>
-#include <mfm/Common.h>
 
-Exporter::Exporter(uint16_t serverPort) : FrameStorage(), m_server(serverPort)
-{
+#include <mfm/Common.h>
+#include <mfm/Field.h>
+#include <mfm/Frame.h>
+#include <mfm/Header.h>
+
+#include "server/ServerMessage.h"
+
+Exporter::Exporter(uint16_t serverPort) : FrameStorage(), m_server(serverPort) {
     m_server.StartServer();
 }
 
-Exporter::~Exporter()
-{
-}
+Exporter::~Exporter() {}
 
-void Exporter::processFrame(mfm::Frame &frame)
-{
+void Exporter::processFrame(mfm::Frame &frame) {
     // Get the frame size, and pointer to start
     size_t nbytes = sizeFrame(frame);
     const mfm::Byte *pData = frame.data();
 
     // Convert frame to raw buffer
     std::vector<uint8_t> buffer;
-    buffer.insert(buffer.end(), &((uint8_t *)pData)[0], &((uint8_t *)pData)[nbytes - 1]);
+    buffer.insert(buffer.begin(), ((uint8_t *)pData), ((uint8_t *)pData + nbytes));
     DataExporter::ServerMessage message(buffer);
 
     // Write the frame to disk
     FrameStorage::processFrame(frame);
 
     // If the server died, for now ignore the frame
-    if (!m_server.IsActive())
-    {
+    if (!m_server.IsActive()) {
         return;
     }
     // Send the frame over the server
@@ -54,9 +51,7 @@ void Exporter::processFrame(mfm::Frame &frame)
  *  @return size_t - size of the frame + header all in one.  I hope this
  *                   includes the meta type field. else we'll miss a byte.
  */
-size_t
-Exporter::sizeFrame(const mfm::Frame &frame)
-{
+size_t Exporter::sizeFrame(const mfm::Frame &frame) {
     mfm::Header const &h = frame.header();
     size_t result = h.headerSize_B() + h.dataSize_B();
 
