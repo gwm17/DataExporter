@@ -3,9 +3,10 @@
 IPADDR=`ipconfig getifaddr en0` # This machine's ip address
 
 GETDIR=$HOME/Documents/GET-software # The GET software directories
-EXPORTER=$HOME/Documents/DataExporter/bin/DataExporter
+EXPORTER_DIR=$HOME/Documents/DataExporter/bin/
 
 export LD_LIBRARY_PATH=$GETDIR/lib:$LD_LIBRARY_PATH # Put the GET libs on the PATH
+export PATH=$PATH:$EXPORTER_DIR # Required for parsing proc name in sentry
 
 # Apparently this is a required hack due to ICE on MacPorts?
 export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib
@@ -16,4 +17,4 @@ killall DataExporter
 killall dataRouter
 
 
-$EXPORTER $IPADDR $IPADDR
+DataExporter $IPADDR $IPADDR
